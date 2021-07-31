@@ -1,23 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+
+
+type option = {
+  optionIndex: number
+}
+
+const Option = (props: option) => {
+  console.log(props.optionIndex)
+  return (
+    <h1>{`Option ${props.optionIndex}`}</h1>
+  )
+}
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Voting</h1>
+        <Option optionIndex={1}/>
       </header>
     </div>
   );
