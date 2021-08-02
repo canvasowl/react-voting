@@ -42,16 +42,18 @@ export const addTestUser = (user: User) => {
 export const getPoll = async () => {
     let poll = {id: 555, title: "???"}
 
-    await db.collection("polls").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const pollData = doc.data()
+    const pollsRef = db.collection("polls")
+    await pollsRef.where("active", "==", true).get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const pollData = doc.data()
 
-            if(pollData.active){
-                poll = {id: 555, title: pollData.name}
-                // console.log(poll)
-            }
+                poll = {...poll, title: pollData.name}
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
         });
-    });
 
     return poll
   }
