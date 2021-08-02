@@ -40,15 +40,14 @@ export const addTestUser = (user: User) => {
 }
 
 export const getPoll = async () => {
-    let poll = {id: 555, title: "???"}
+    let poll = {id: 555, title: "???", collectionId: ""}
 
     const pollsRef = db.collection("polls")
-    await pollsRef.where("active", "==", true).get()
+    await pollsRef.where("active", "==", true).limit(1).get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 const pollData = doc.data()
-
-                poll = {...poll, title: pollData.name}
+                poll = {...poll, collectionId: doc.id, title: pollData.name}
             });
         })
         .catch((error) => {
@@ -58,15 +57,29 @@ export const getPoll = async () => {
     return poll
   }
   
-export const getOptions = () => {
-    // TODO: Get options from Firestore DB
+export const getOptions = async (pollId: string) => {
+    const pollRefDoc = db.collection('polls').doc(pollId)
+    
+    const options: any = []
 
-    const options = [
-        {title: "Kenny Omega", totalVotes: 0},
-        {title: "Cm Punk", totalVotes: 0}
-    ]
+    const optionsRef = await db.collection("options")
+        .where("poll", "==", pollRefDoc).limit(2).get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const optionData = doc.data()
+                options.push({title: optionData.name, img: optionData.img, totalVotes: 0})
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });    
+    
+    // const options = [
+    //     {title: "Kenny Omega", totalVotes: 0},
+    //     {title: "Cm Punk", totalVotes: 0}
+    // ]
 
-return options
+    return options
 }
 
 export const persistVote = (optionId: string) => {

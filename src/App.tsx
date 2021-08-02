@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { setConstantValue } from 'typescript';
 import './App.css';
 import { 
@@ -45,14 +45,18 @@ function App (this: any) {
   // }
 
   const [poll, setPoll] = useState({id: 0, title: "???"})
+  const [options, setOptions] = useState([])
   const [loading, setLoading] = useState(true)
 
-  if (loading) {
-    getPoll().then((newPoll) =>{
-      setLoading(false)
+  useEffect(() => {
+    getPoll().then((newPoll) => {
       setPoll(newPoll)
+      getOptions(newPoll.collectionId).then((newOptions) => {
+        setOptions(newOptions)
+        setLoading(false)
+      })
     })    
-  }
+  }, [])
 
   if (loading) {
     return (
