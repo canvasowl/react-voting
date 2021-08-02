@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { setConstantValue } from 'typescript';
 import './App.css';
 import { 
   addTestUser,
@@ -16,7 +17,7 @@ type Option = {
 
 type Poll = {
   id: number,
-  title: string,
+  title: string
 }
 
 const Option = (props: Option) => {
@@ -37,15 +38,27 @@ const Option = (props: Option) => {
 }
 
 
-function App(this: any) {
-  
+function App (this: any) {
   // TODO: leave this here for now reference
   // const submitVote = (optionIndex: number) => {
   //   console.log("HELLO "+ optionIndex)
   // }
 
-  const poll: Poll = getPoll()
-  const options = getOptions()
+  const [poll, setPoll] = useState({id: 0, title: "???"})
+  const [loading, setLoading] = useState(true)
+
+  if (loading) {
+    getPoll().then((newPoll) =>{
+      setLoading(false)
+      setPoll(newPoll)
+    })    
+  }
+
+  if (loading) {
+    return (
+      <p>Loading...</p>
+    )
+  }
 
   return (
     <div className="App">

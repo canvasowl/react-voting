@@ -39,14 +39,20 @@ export const addTestUser = (user: User) => {
     })
 }
 
-export const getPoll = () => {
-    // TODO: Get active Poll from Firestore DB
-  
-    const poll = {
-      id: 555,
-      title: "Who will win the main event at All Out?"
-    }
-  
+export const getPoll = async () => {
+    let poll = {id: 555, title: "???"}
+
+    await db.collection("polls").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const pollData = doc.data()
+
+            if(pollData.active){
+                poll = {id: 555, title: pollData.name}
+                // console.log(poll)
+            }
+        });
+    });
+
     return poll
   }
   
