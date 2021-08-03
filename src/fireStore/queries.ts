@@ -39,6 +39,10 @@ export const addTestUser = (user: User) => {
     })
 }
 
+/**
+ * Get one specofoc active poll
+ * @returns 
+ */
 export const getPoll = async () => {
     let poll = {id: 555, title: "???", collectionId: ""}
 
@@ -57,9 +61,14 @@ export const getPoll = async () => {
     return poll
   }
   
+/**
+ * API call to get get options that are 
+ * related to the given poll
+ * @param pollId 
+ * @returns 
+ */
 export const getOptions = async (pollId: string) => {
     const pollRefDoc = db.collection('polls').doc(pollId)
-    
     const options: any = []
 
     const optionsRef = await db.collection("options")
@@ -72,16 +81,15 @@ export const getOptions = async (pollId: string) => {
         })
         .catch((error) => {
             console.log("Error getting documents: ", error);
-        });    
-    
-    // const options = [
-    //     {title: "Kenny Omega", totalVotes: 0},
-    //     {title: "Cm Punk", totalVotes: 0}
-    // ]
+    });    
 
     return options
 }
 
+/**
+ * Persist the users vote into the database
+ * @param optionId 
+ */
 export const persistVote = (optionId: string) => {
     // TODO: Insert vote into Votes collectoin in DB
 }

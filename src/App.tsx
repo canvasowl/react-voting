@@ -11,17 +11,19 @@ import {
 
 // IMPORT ABOVE
 //========================================================================================
-type Option = {
+type typeOption = {
   optionIndex: number,
+  option: any
 }
 
-type Poll = {
+type typePoll = {
   id: number,
   title: string
 }
 
-const Option = (props: Option) => {
-  const [totalVotes, setTotalVotes] = useState(0);
+const Option = (props: typeOption) => {
+  console.log(props)
+  const [totalVotes, setTotalVotes] = useState(props.option.totalVotes);
 
   const submitVote = () => {
     let votes = totalVotes + 1
@@ -30,9 +32,12 @@ const Option = (props: Option) => {
 
   return (
     <>
-      <h1>{`Option ${props.optionIndex}`}</h1>
-      <button onClick={() => submitVote()}>Vote</button>
-      <p>Total votes {totalVotes}</p>
+      <div className="optionContainer">
+        <img src={props.option.img} alt={props.option.title} />
+        <h1>{props.option.title}</h1>
+        <button onClick={() => submitVote()}>Vote</button>
+        <p>Total votes {totalVotes}</p>
+      </div>
     </>
   )
 }
@@ -64,13 +69,18 @@ function App (this: any) {
     )
   }
 
+  const optionList =  options.map((option, i) => 
+    <Option key={i} optionIndex={i} option={option} />
+  )
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>{ poll.title }</h1>
-        <Option optionIndex={0} />
-        <Option optionIndex={1} />
       </header>
+      <div id="poll">
+        { optionList }
+      </div>
     </div>
   );
 }
