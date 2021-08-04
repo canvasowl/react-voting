@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { setConstantValue } from 'typescript';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom'
 import './App.css';
 import { 
   addTestUser,
@@ -32,12 +38,14 @@ const Option = (props: typeOption) => {
 
   return (
     <>
-      <div className="optionContainer">
-        <img src={props.option.img} alt={props.option.title} />
-        <h1>{props.option.title}</h1>
-        <button onClick={() => submitVote()}>Vote</button>
-        <p>Total votes {totalVotes}</p>
-      </div>
+      <Router>
+        <div className="optionContainer">
+          <img src={props.option.img} alt={props.option.title} />
+          <h1>{props.option.title}</h1>
+          <button onClick={() => submitVote()}>Vote</button>
+          <p>Total votes {totalVotes}</p>
+        </div>
+      </Router>       
     </>
   )
 }
