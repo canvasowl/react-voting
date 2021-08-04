@@ -1,28 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import { setConstantValue } from 'typescript';
+import {useState, useEffect} from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
-import { 
-  addTestUser,
-  getPoll, 
-  getOptions, 
-  persistVote 
-} from './fireStore/queries'
+import {getPoll,getOptions,} from './fireStore/queries'
 import Option from './components/option/option'
 
-
-// IMPORT ABOVE
-//========================================================================================
-
-type typePoll = {
-  id: number,
-  title: string
-}
 
 function App (this: any) {
   // TODO: leave this here for now reference
