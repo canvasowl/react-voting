@@ -1,55 +1,28 @@
 import React, {useState, useEffect} from 'react';
 import { setConstantValue } from 'typescript';
+import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from 'react-router-dom'
-import './App.css';
 import { 
   addTestUser,
   getPoll, 
   getOptions, 
   persistVote 
 } from './fireStore/queries'
+import Option from './components/option/option'
 
 
 // IMPORT ABOVE
 //========================================================================================
-type typeOption = {
-  optionIndex: number,
-  option: any
-}
 
 type typePoll = {
   id: number,
   title: string
 }
-
-const Option = (props: typeOption) => {
-  console.log(props)
-  const [totalVotes, setTotalVotes] = useState(props.option.totalVotes);
-
-  const submitVote = () => {
-    let votes = totalVotes + 1
-    setTotalVotes(votes)
-  }
-
-  return (
-    <>
-      <Router>
-        <div className="optionContainer">
-          <img src={props.option.img} alt={props.option.title} />
-          <h1>{props.option.title}</h1>
-          <button onClick={() => submitVote()}>Vote</button>
-          <p>Total votes {totalVotes}</p>
-        </div>
-      </Router>       
-    </>
-  )
-}
-
 
 function App (this: any) {
   // TODO: leave this here for now reference
