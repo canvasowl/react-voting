@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 type typeOption = {
     optionIndex: number,
-    option: any
+    option: any,
 }
   
 const Option = (props: typeOption) => {
